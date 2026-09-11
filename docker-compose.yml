@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: postgres:16
+    container_name: sales_app_postgres
+
+    environment:
+      POSTGRES_DB: sales_app_db
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+
+    ports:
+      - "5433:5432"
+
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./sales_app_db.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
